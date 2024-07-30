@@ -57,6 +57,7 @@ module.exports.addToCart = async (req, res) => {
             productId: productId,
             name: product.name,
             price: product.price,
+            image: product.image,
             quantity: quantity,
             subtotal: subtotal,
           },
@@ -85,6 +86,7 @@ module.exports.addToCart = async (req, res) => {
           productId: productId,
           name: product.name,
           price: product.price,
+          image: product.image,
           quantity: quantity,
           subtotal: product.price * quantity,
         });
@@ -108,7 +110,6 @@ module.exports.addToCart = async (req, res) => {
     errorHandler(error, req, res);
   }
 };
-
 
 // Controller function for updating product quantities in Cart
 module.exports.updateCartQuantity = async (req, res) => {
@@ -158,7 +159,7 @@ module.exports.updateCartQuantity = async (req, res) => {
 // Controller function for removing an item from the cart
 module.exports.removeItem = async (req, res) => {
   try {
-    const productId = req.body.productId; 
+    const productId = req.body.productId;
 
     const userCart = await Cart.findOne({ userId: req.user.id });
 

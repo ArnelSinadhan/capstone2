@@ -21,6 +21,9 @@ const productSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  image: {
+    type: String, // or use Buffer if you plan to store images directly
+  },
 });
 
 module.exports = mongoose.model("Product", productSchema);

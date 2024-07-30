@@ -15,11 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS options
 const corsOptions = {
-  origin: [
-    "https://capstone3-wine.vercel.app",
-    "https://capstone3-git-master-arnels-projects-6434d9a7.vercel.app",
-    "https://capstone3-o9z28p3jy-arnels-projects-6434d9a7.vercel.app",
-  ],
+  origin: ["http://localhost:8000", "http://localhost:5173"],
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -32,7 +28,8 @@ mongoose.connect(process.env.MONGODB_STRING);
 mongoose.connection.once("open", () =>
   console.log("Now connected to MongoDB Atlas")
 );
-// static files form the uploads directory
+// Serve static files from the uploads directory
+app.use("/uploads", express.static("uploads"));
 // User routes
 app.use("/b4/users", userRoutes);
 // Product routes

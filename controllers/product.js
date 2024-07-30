@@ -5,6 +5,7 @@ const { errorHandler } = require("../auth");
 module.exports.addProduct = async (req, res) => {
   try {
     const { name, description, price } = req.body;
+    const image = req.file ? req.file.filename : undefined; // Handle image upload
 
     // Check if product with the same name already exists
     const existingProduct = await Product.findOne({ name });
@@ -17,6 +18,7 @@ module.exports.addProduct = async (req, res) => {
       name,
       description,
       price,
+      image,
     });
 
     // Save product to database
@@ -76,9 +78,10 @@ module.exports.updateProduct = async (req, res) => {
   try {
     const { productId } = req.params;
     const { name, description, price } = req.body;
+    const image = req.file ? req.file.filename : undefined; // Handle image upload
 
-    // Check if a new image file is uploaded
     let updateData = { name, description, price };
+    if (image) updateData.image = image;
 
     const updatedProduct = await Product.findByIdAndUpdate(
       productId,

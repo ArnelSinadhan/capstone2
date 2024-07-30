@@ -19,6 +19,9 @@ const cartSchema = new mongoose.Schema({
         type: String,
         required: [true, "Product price is required"],
       },
+      image: {
+        type: String, // or use Buffer if you plan to store images directly
+      },
       quantity: {
         type: Number,
         required: [true, "Quantity is required"],
@@ -40,4 +43,3 @@ const cartSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Cart", cartSchema);
- 

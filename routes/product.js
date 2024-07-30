@@ -1,11 +1,35 @@
 const express = require("express");
 const productController = require("../controllers/product.js");
 const { verify, verifyAdmin } = require("../auth.js");
-
+const multer = require("multer");
+const path = require("path");
 const router = express.Router();
 
+// Set up storage and file filter
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "_" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({
+  storage: storage,
+});
+
 //[SECTION] Route for creating product
-router.post("/", verify, verifyAdmin, productController.addProduct);
+router.post(
+  "/",
+  verify,
+  verifyAdmin,
+  upload.single("file"),
+  productController.addProduct
+);
 
 //[SECTION] Route for retrieving all products
 router.get("/all", verify, verifyAdmin, productController.getAllProduct);
@@ -21,6 +45,7 @@ router.patch(
   "/:productId/update",
   verify,
   verifyAdmin,
+  upload.single("image"),
   productController.updateProduct
 );
 
