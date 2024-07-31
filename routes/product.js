@@ -9,6 +9,7 @@ const router = express.Router();
 const storage = new GridFsStorage({
   url: process.env.MONGODB_STRING,
   file: (req, file) => {
+    console.log(file);
     return {
       filename:
         file.fieldname + "_" + Date.now() + path.extname(file.originalname),
