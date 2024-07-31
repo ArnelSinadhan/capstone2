@@ -42,7 +42,7 @@ router.patch(
   "/:productId/update",
   verify,
   verifyAdmin,
-  upload.single("image"),
+  upload.single("file"),
   productController.updateProduct
 );
 
@@ -67,5 +67,20 @@ router.post("/search-by-name", productController.searchByName);
 
 // Route to search for product by price range
 router.post("/search-by-price", productController.searchByPrice);
+
+// Route to fetch image by filename
+router.get("/images/:filename", (req, res) => {
+  const filename = req.params.filename;
+  const gfs = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+    bucketName: "uploads",
+  });
+
+  gfs
+    .openDownloadStreamByName(filename)
+    .on("error", (err) => {
+      return res.status(404).json({ err: "No file exists" });
+    })
+    .pipe(res);
+});
 
 module.exports = router;
