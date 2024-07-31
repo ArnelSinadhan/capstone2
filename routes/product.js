@@ -3,24 +3,22 @@ const productController = require("../controllers/product.js");
 const { verify, verifyAdmin } = require("../auth.js");
 const multer = require("multer");
 const path = require("path");
+const { GridFsStorage } = require("multer-gridfs-storage");
 const router = express.Router();
 
-// Set up storage and file filter
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      file.fieldname + "_" + Date.now() + path.extname(file.originalname)
-    );
+const storage = new GridFsStorage({
+  url: process.env.MONGODB_STRING,
+  options: { useNewUrlParser: true, useUnifiedTopology: true },
+  file: (req, file) => {
+    return {
+      filename:
+        file.fieldname + "_" + Date.now() + path.extname(file.originalname),
+      bucketName: "uploads", // Bucket name to use in GridFS
+    };
   },
 });
 
-const upload = multer({
-  storage: storage,
-});
+const upload = multer({ storage });
 
 //[SECTION] Route for creating product
 router.post(
