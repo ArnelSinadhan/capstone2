@@ -84,7 +84,10 @@ router.get("/images/:filename", (req, res) => {
     .on("error", (err) => {
       return res.status(404).json({ err: "No file exists" });
     })
-    .pipe(res);
+    .pipe(res)
+    .on("finish", () => {
+      console.log("Image sent successfully");
+    });
 });
 
 module.exports = router;
