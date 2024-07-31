@@ -32,8 +32,6 @@ mongoose.connect(process.env.MONGODB_STRING);
 mongoose.connection.once("open", () =>
   console.log("Now connected to MongoDB Atlas")
 );
-// Serve static files from the uploads directory
-app.use("/uploads", express.static("uploads"));
 // User routes
 app.use("/b4/users", userRoutes);
 // Product routes
