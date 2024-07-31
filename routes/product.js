@@ -5,6 +5,7 @@ const multer = require("multer");
 const path = require("path");
 const { GridFsStorage } = require("multer-gridfs-storage");
 const router = express.Router();
+const mongoose = require("mongoose");
 
 const storage = new GridFsStorage({
   url: process.env.MONGODB_STRING,
@@ -22,7 +23,7 @@ const upload = multer({
   storage: storage,
 });
 
-//[SECTION] Route for creating product
+// Route for creating product
 router.post(
   "/",
   verify,
@@ -31,10 +32,10 @@ router.post(
   productController.addProduct
 );
 
-//[SECTION] Route for retrieving all products
+// Route for retrieving all products
 router.get("/all", verify, verifyAdmin, productController.getAllProduct);
 
-// [SECTION] Route for retrieving all active products
+// Route for retrieving all active products
 router.get("/active", productController.getActiveProduct);
 
 // Route for Retrieving single product
