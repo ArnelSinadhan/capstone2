@@ -21,7 +21,7 @@ const corsOptions = {
     "https://capstone3-hyysdear4-arnels-projects-6434d9a7.vercel.app",
   ],
   credentials: true,
-  optionSuccessStatus: 200,
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));

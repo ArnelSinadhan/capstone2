@@ -8,7 +8,6 @@ const router = express.Router();
 
 const storage = new GridFsStorage({
   url: process.env.MONGODB_STRING,
-  options: { useNewUrlParser: true, useUnifiedTopology: true },
   file: (req, file) => {
     return {
       filename:
