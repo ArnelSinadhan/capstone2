@@ -7,6 +7,8 @@ module.exports.addProduct = async (req, res) => {
     const { name, description, price } = req.body;
     const image = req.file ? req.file.filename : undefined; // Handle image upload
 
+    console.log("Uploaded file details:", req.file); // Debugging statement
+
     // Check if product with the same name already exists
     const existingProduct = await Product.findOne({ name });
     if (existingProduct) {
