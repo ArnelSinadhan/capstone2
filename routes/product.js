@@ -17,7 +17,9 @@ const storage = new GridFsStorage({
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({
+  storage: storage,
+});
 
 //[SECTION] Route for creating product
 router.post(
